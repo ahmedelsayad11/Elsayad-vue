@@ -6,6 +6,9 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+import { v1 } from 'uuid';
+
 export default {
   data() {
     return {
@@ -13,8 +16,18 @@ export default {
     };
   },
   methods: {
+    ...mapActions(['addTodo']),
     onTodoInputChange(e) {
       this.todoInputText = e.target.value;
+    },
+    addTodo1() {
+      this.addTodo({
+        id: v1(),
+        title: this.todoInputText,
+        complete: false,
+      });
+      this.todoInputText = '';
+      console.log(this.$store.state.todos);
     },
   },
 };

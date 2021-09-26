@@ -13,21 +13,20 @@
     </div>
 
     <div>
-      <Button danger @click="deleteTodo(todo.id)">delete</Button>
-      <Button v-if="!editing" @click="toggleEditing(todo)">{{ 'Edit' }}</Button>
-      <Button v-else @click="updateTodoText1(todo)">{{ 'Update' }}</Button>
+      <a-button danger @click="deleteTodo(todo.id)">delete</a-button>
+      <a-button v-if="!editing" @click="toggleEditing(todo)">{{ 'Edit' }}</a-button>
+      <a-button v-else @click="updateTodoText1(todo)">{{ 'Update' }}</a-button>
     </div>
   </div>
 </template>
 
 <script>
-import { Button } from 'ant-design-vue';
+import { mapActions } from 'vuex';
 
 export default {
   props: {
     todo: {},
   },
-  components: { Button },
   data() {
     return {
       editing: false,
@@ -35,6 +34,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(['deleteTodo', 'updateTodoText', 'updateTodoStatus']),
 
     toggleEditing(todo) {
       this.editing = !this.editing;
@@ -48,6 +48,13 @@ export default {
       console.log(this.todoInputEdit);
     },
 
+    updateTodoText1(todo) {
+      this.updateTodoText({ ...todo, title: this.todoInputEdit });
+      this.editing = !this.editing;
+    },
+    updateTodoStatus1(todo) {
+      this.updateTodoStatus({ ...todo, completed: !todo.completed });
+    },
   },
 };
 </script>

@@ -6,6 +6,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   data() {
     return {
@@ -13,6 +15,8 @@ export default {
     };
   },
   methods: {
+    ...mapActions(['getPosts']),
+
     handleGetTodosOfSpecifcUser() {
       this.getPosts(+this.userIdInput);
     },
