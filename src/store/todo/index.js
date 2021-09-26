@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
 // import Vue from 'vue';
 import { createStore } from 'vuex';
-import axios from 'axios';
+import apiCall from '../../core/api';
 
 const state = {
   filtered: false,
@@ -29,30 +29,24 @@ const getters = {
   filtered: (state) => state.filtered,
 };
 const actions = {
-  getPosts({ commit }, userId) {
-    axios.get(`https://jsonplaceholder.typicode.com/todos?userId=${userId}`).then((response) => {
-      commit('SET_POSTS', response.data);
-    });
+  async getPosts({ commit }, userId) {
+    const data = await apiCall(userId);
+    commit('SET_POSTS', data);
   },
   filterTheTodos({ commit }) {
     commit('filter_todos');
-    console.log('filter_todos');
   },
   addTodo({ commit }, todo) {
     commit('add_todo', todo);
-    console.log('add_todo');
   },
   deleteTodo({ commit }, id) {
     commit('delete_todo', id);
-    console.log('delete_todo');
   },
   updateTodoText({ commit }, todo) {
     commit('update_todo_text', todo);
-    console.log('update_todo_text');
   },
   updateTodoStatus({ commit }, todo) {
     commit('updateTodoStatus', todo);
-    console.log('updateTodoStatus');
   },
 };
 const mutations = {
